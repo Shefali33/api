@@ -4,7 +4,7 @@ import sinController from "../controller/signin"
 const router = express.Router()
 
 router.post('/login', supController.addUser)
-// router.post('/login', sinController.saveForm)
+router.post('/login', sinController.loginUser)
 
 
 export default router;
