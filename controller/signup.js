@@ -1,9 +1,8 @@
 import userModel from "../models/user"
-// const mongoose = require('mongoose');
 
 const supController = {}
 
-supController.newUser = async (req, res, next) => {
+supController.addUser = async (req, res, next) => {
     let newUser = new userModel({
        usename:req.body.username,
        email:req.body.email,
