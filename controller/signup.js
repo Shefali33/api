@@ -12,11 +12,12 @@ supController.addUser = async (req, res, next) => {
 
     try{
         const savedUser = await newUser.save()
-
         res.send('added: ' + savedUser);
+        console.log("User added");
     }
     catch(err){
         res.send('GOT error in adding order');
+        console.log("Error adding")
     }
 }
 

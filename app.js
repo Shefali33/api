@@ -1,6 +1,5 @@
 var express = require('express');
 var bodyParser = require ('body-parser');
-var jwt = require('jsonwebtoken');
 import connectToDb from './db/connection';
 import config from './db/config';
 import users from './routes/useroutes'
@@ -19,7 +18,6 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
     next();
 });
-
 app.use('/api',users);
 
 
