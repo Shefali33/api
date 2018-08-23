@@ -17,7 +17,7 @@ sinController.loginUser =  (req, res, next) => {
                     res
                         .status(400)
                         .json(err)
-                        console.log("Passsword incorrect");
+                        console.log("Password incorrect");
                 }
             }
             else{

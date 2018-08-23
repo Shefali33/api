@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require ('body-parser');
-// var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 import connectToDb from './db/connection';
 import config from './db/config';
 import users from './routes/useroutes'
