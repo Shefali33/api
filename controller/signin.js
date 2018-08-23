@@ -2,22 +2,27 @@ import userModel from "../models/user"
 
 const sinController = {}
 
-sinController.loginUser = async (req, res, next) => {
-    let newUser = new userModel({
-       usename:req.body.username,
-       email:req.body.email,
-       password:req.body.password,
-       full_name:req.body.fname
-    });
-
-    try{
-        const savedUser = await newUser.save()
-
-        res.send('added: ' + savedUser);
-    }
-    catch(err){
-        res.send('GOT error in adding order');
-    }
+sinController.loginUser =  (req, res, next) => {
+    await userModel 
+        .findOne({email:req.body.email})
+        .exec((err, user) => {
+            if(err){
+                res
+                    .status(400)
+                    .json(err)
+            }if (user){
+                user.password == req.body.password
+                res
+                    .send("Loggedin")
+                    .json({user})
+            }
+            else{
+                res
+                    .status(400)
+                    .json(err)
+            }
+        })
 }
 
 export default sinController;
+
