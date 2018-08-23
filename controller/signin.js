@@ -3,23 +3,26 @@ import userModel from "../models/user"
 const sinController = {}
 
 sinController.loginUser =  (req, res, next) => {
-    await userModel 
+    userModel 
         .findOne({email:req.body.email})
         .exec((err, user) => {
-            if(err){
-                res
-                    .status(400)
-                    .json(err)
-            }if (user){
-                user.password == req.body.password
+            if (user){
+                if(user.password == req.body.password){
                 res
                     .send("Loggedin")
-                    .json({user})
+                    // .json({user})
+                    console.log(user);
+            }
+                else{
+                    res
+                        .status(400)
+                        .json(err)
+                        console.log("Passsword incorrect");
+                }
             }
             else{
-                res
-                    .status(400)
-                    .json(err)
+                res.send("User not found");
+                console.log("not found");
             }
         })
 }
