@@ -1,47 +1,29 @@
 import userModel from "../models/user"
-var express = require('express');
-const app = express();
-var jwt = require('jsonwebtoken');
-app.set('secrettoken', 'qwertyuiopasdfghjkl');
+let passport = require('passport');
+let LocalStrategy = require('passport-local').Strategy;
 
-const sinController = {}
+// const sinController = () =>{
 
-sinController.loginUser =  (req, res, next) => {
-    userModel 
-        //finds the user
-        .findOne({email:req.body.email})
-        .exec((err, user) => {
-            if (user){
-                // email & password matches
-                if(user.password == req.body.password){
-                    const payload = {
-                        id: user._id 
-                      };
-                        var token = jwt.sign(payload, app.get('secrettoken'), {
-                        expiresIn: "1 day"  // expires in 24 hours
-                          });
-                  
-                          // return the information including token as JSON
-                        res.json({
-                            success: true,
-                            message: 'Enjoy your token!',
-                            token: token
-                          });
-            }
-                else{
-                    res
-                        .status(400)
-                        .json(err)
-                        console.log("Password incorrect");
-                }
-            }
-            // email not found
-            else{
-                res.send("User not found");
-                console.log("not found");
-            }
-        })
-}
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true,
+    session: false
+  },
+    function(req,username, password, done) {
+      userModel
+            .findOne({ username: req.body.email })
+            .exec((err, user) => {
+                if (err) { return done(err); } 
+                if (!user) { return done(null, false); }
+                if (!user.verifyPassword(req.body.password)) { return done(null, false); }
+                return done(null, user);
+            });
+    }
+  ));
+  
+  
 
-export default sinController;
+// }
+// export default sinController;
 
