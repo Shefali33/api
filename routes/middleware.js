@@ -44,7 +44,9 @@ passport.use('login', new localStrategy({
         return done(null, false, { message : 'Wrong Password'});
       }
       //Send the user information to the next middleware
-      return done(null, user, { message : 'Logged in Successfully'});
+      return done(null, user, 
+        
+        { message : 'Logged in Successfully'});
     } catch (error) {
       return done(error);
     }

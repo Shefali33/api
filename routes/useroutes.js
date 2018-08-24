@@ -25,8 +25,8 @@ router.post('/login', async (req, res, next) => {
     try {
       if(err || !user){
         console.log(err);
-        const error = new Error('An Error occured')
-        return next(error);
+        return next(error);        const error = new Error('An Error occured')
+
       }
       req.login(user, { session : false }, async (error) => {
         if( error ) return next(error)
